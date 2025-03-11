@@ -35,6 +35,10 @@ variable "enviroment" {
   default = "dev"
 }
 
+module "networking" {
+  source = "./modules/networking"
+}
+
 # resource "random_pet" "random_f" {
 #   length = 1
 # }
