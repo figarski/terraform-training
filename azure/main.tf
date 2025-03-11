@@ -8,6 +8,16 @@ terraform {
       source = "hashicorp/random"
     }
   }
+
+    backend "azurerm" {
+      resource_group_name = "terraform-training-dev-rg"
+      storage_account_name = "tfstatepekaoserval"
+      container_name = "tfstatecointainer"
+      key = "pekao_warsztat_tfstatedev"
+      subscription_id = "f6ea3f89-3ee9-4c9c-906d-08b5cd8e4730"
+      tenant_id       = "dad88b20-14ed-40fc-bdf0-07032373d636"
+    }
+
 }
 
 provider "azurerm" {
@@ -31,4 +41,20 @@ variable "enviroment" {
   default = "dev"
 }
 
+# resource "random_pet" "random_f" {
+#   length = 1
+# }
 
+# resource "azurerm_storage_account" "tfstate" {
+#   name = "tfstatepekao${random_pet.random_f.id}"
+#   location = "east us"
+#   resource_group_name = azurerm_resource_group.rg.name
+#   account_tier = "Standard"
+#   account_replication_type = "LRS"
+# }
+
+# resource "azurerm_storage_container" "tfstate" {
+#   name = "tfstatecontainer"
+#   storage_account_name = azurerm_storage_account.tfstate.name
+#   container_access_type = "blob"
+# }

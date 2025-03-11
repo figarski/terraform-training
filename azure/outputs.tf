@@ -9,3 +9,7 @@ output "subnet_f_id1" {
 output "subnet_f_id2" {
   value = azurerm_subnet.subnet_f2.name
   }
+
+# output "storage_account_id" {
+#   value = azurerm_storage_account.tfstate.name
+#   }

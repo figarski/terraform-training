@@ -6,7 +6,7 @@ resource "azurerm_virtual_network" "virt_network" {
 }
 
 resource "random_pet" "random_f" {
-  prefix = "pekao"
+   prefix = "pekao"
   length = 1
 }
 
