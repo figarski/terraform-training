@@ -10,10 +10,10 @@ terraform {
   }
 
   backend "azurerm" {
-    resource_group_name = "terraform-training-dev-rg"
+    resource_group_name  = "terraform-training-dev-rg"
     storage_account_name = "tfstatepekaoserval"
-    container_name = "tfstatecointainer"
-    key = "pekao_warsztat_tfstatedev"
+    container_name       = "tfstatecointainer"
+    key                  = "pekao_warsztat_tfstatedev"
   }
 
 }
