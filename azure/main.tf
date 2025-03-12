@@ -9,12 +9,12 @@ terraform {
     }
   }
 
-    backend "azurerm" {
-      resource_group_name = "terraform-training-dev-rg"
-      storage_account_name = "tfstatepekaoserval"
-      container_name = "tfstatecointainer"
-      key = "pekao_warsztat_tfstatedev"
-    }
+    # backend "azurerm" {
+    #   resource_group_name = "terraform-training-dev-rg"
+    #   storage_account_name = "tfstatepekaoserval"
+    #   container_name = "tfstatecointainer"
+    #   key = "pekao_warsztat_tfstatedev"
+    # }
 
 }
 
@@ -24,15 +24,35 @@ provider "azurerm" {
   }
 }
 
+data "terraform_remote_state" "network" {
+  backend = "azurerm"
+  
+  config = {
+      resource_group_name = "terraform-training-dev-rg"
+      storage_account_name = "tfstatepekaoserval"
+      container_name = "tfstatecointainer"
+      key = "pekao_warsztat_tfstatedev"
+  }
+}
+
+output "vnet_id_remote" {
+  value = data.terraform_remote_state.network.outputs.vnet_id
+}
 
 resource "azurerm_resource_group" "rg" {
-    name = "terraform-training-dev-rg"
+    count = var.rg_count
+    name = "terraform-training-dev-rg-${count.index}"
     location = "east us"
 }
 
 variable "enviroment" {
   type = string
   default = "dev"
+}
+
+variable "rg_count" {
+  type = number
+  default = 3
 }
 
 module "networking" {
