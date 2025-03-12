@@ -24,6 +24,7 @@ resource "azurerm_subnet" "subnet_f2" {
   address_prefixes = [var.address_prefixes[1]]
 }
 
+#przyklad z count
 resource "azurerm_resource_group" "rg_f" {
   count = var.rg_count
   name = "metadata-frg-${count.index}"
