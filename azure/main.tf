@@ -40,10 +40,16 @@ output "vnet_id_remote" {
 }
 
 resource "azurerm_resource_group" "rg" {
-    count = var.rg_count
-    name = "terraform-training-dev-rg-${count.index}"
+ #   count = var.rg_count
+    name = "terraform-training-dev-rg"
     location = "east us"
 }
+
+# resource "azurerm_resource_group" "rg2" {
+#   for_each = toset(["aa1","aa2"])
+#   name = "terraform-training-dev-rg-${each.value}"
+#   location = "east us"
+# }
 
 variable "enviroment" {
   type = string
@@ -57,6 +63,10 @@ variable "rg_count" {
 
 module "networking" {
   source = "./modules/networking"
+  addresses = {
+    subnet1 = "10.0.1.0/24"
+    subnet2 = "10.0.2.0/24"
+  }
 }
 
 # resource "random_pet" "random_f" {

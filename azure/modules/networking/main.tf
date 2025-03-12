@@ -10,16 +10,18 @@ resource "random_pet" "random_f" {
   length = 1
 }
 
+
 resource "azurerm_subnet" "subnet_f1" {
-  name = "${random_pet.random_f.id}_subnet-0"
+  for_each = var.addresses
+  name = "${random_pet.random_f.id}_${each.key}"
   resource_group_name = "terraform-training-${var.enviroment}-rg"
   virtual_network_name = azurerm_virtual_network.virt_network.name
-  address_prefixes = [var.address_prefixes[0]]
+  address_prefixes = [each.value]
 }
 
-resource "azurerm_subnet" "subnet_f2" {
-  name = "${random_pet.random_f.id}_subnet-1"
-  resource_group_name = "terraform-training-${var.enviroment}-rg"
-  virtual_network_name = azurerm_virtual_network.virt_network.name
-  address_prefixes = [var.address_prefixes[1]]
-}
+# resource "azurerm_subnet" "subnet_f2" {
+#   name = "${random_pet.random_f.id}_subnet-1"
+#   resource_group_name = "terraform-training-${var.enviroment}-rg"
+#   virtual_network_name = azurerm_virtual_network.virt_network.name
+#   address_prefixes = [var.address_prefixes[1]]
+# }
