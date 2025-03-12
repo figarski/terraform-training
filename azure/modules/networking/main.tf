@@ -23,3 +23,25 @@ resource "azurerm_subnet" "subnet_f2" {
   virtual_network_name = azurerm_virtual_network.virt_network.name
   address_prefixes = [var.address_prefixes[1]]
 }
+
+resource "azurerm_resource_group" "rg_f" {
+  count = var.rg_count
+  name = "metadata-frg-${count.index}"
+  location = var.location
+}
+
+
+#przyklad for_each nr 1 z variable
+resource "azurerm_resource_group" "example-frg" {
+  for_each = var.storage_accounts
+  name = "terraform-training-${var.enviroment}-rg-${each.value}"
+  location = var.location
+}
+
+
+#przyklad for_each nr 2 bez deklaracji variable, tylko w resource wartosci
+resource "azurerm_resource_group" "example-frg2" {
+  for_each = toset(["devstorageaccount", "prestorageaccount"])
+  name = "terraform-training-${var.enviroment}-rg-${each.value}"
+  location = var.location
+}
