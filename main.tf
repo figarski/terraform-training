@@ -1,37 +1,37 @@
 terraform {
   required_providers {
     azurerm = {
-        source = "hashicorp/azurerm"
-        version = "4.1.0"
+      source  = "hashicorp/azurerm"
+      version = "4.1.0"
     }
     random = {
       source = "hashicorp/random"
     }
   }
 
-    # backend "azurerm" {
-    #   resource_group_name = "terraform-training-dev-rg"
-    #   storage_account_name = "tfstatepekaoserval"
-    #   container_name = "tfstatecointainer"
-    #   key = "pekao_warsztat_tfstatedev"
-    # }
+  # backend "azurerm" {
+  #   resource_group_name = "terraform-training-dev-rg"
+  #   storage_account_name = "tfstatepekaoserval"
+  #   container_name = "tfstatecointainer"
+  #   key = "pekao_warsztat_tfstatedev"
+  # }
 
 }
 
 provider "azurerm" {
   features {
-    
+
   }
 }
 
 data "terraform_remote_state" "network" {
   backend = "azurerm"
-  
+
   config = {
-      resource_group_name = "terraform-training-dev-rg"
-      storage_account_name = "tfstatepekaoserval"
-      container_name = "tfstatecointainer"
-      key = "pekao_warsztat_tfstatedev"
+    resource_group_name  = "terraform-training-dev-rg"
+    storage_account_name = "tfstatepekaoserval"
+    container_name       = "tfstatecointainer"
+    key                  = "pekao_warsztat_tfstatedev"
   }
 }
 
@@ -40,9 +40,9 @@ output "vnet_id_remote" {
 }
 
 resource "azurerm_resource_group" "rg" {
- #   count = var.rg_count
-    name = "terraform-training-dev-rg"
-    location = "east us"
+  #   count = var.rg_count
+  name     = "terraform-training-dev-rg"
+  location = "east us"
 }
 
 # resource "azurerm_resource_group" "rg2" {
@@ -52,12 +52,12 @@ resource "azurerm_resource_group" "rg" {
 # }
 
 variable "enviroment" {
-  type = string
+  type    = string
   default = "dev"
 }
 
 variable "rg_count" {
-  type = number
+  type    = number
   default = 3
 }
 

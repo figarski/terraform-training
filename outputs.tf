@@ -1,10 +1,10 @@
 output "vnet_id" {
   value = module.networking.vnet_id
-  }
+}
 
 output "subnet_f_names" {
   value = module.networking.subnet_names
-  }
+}
 
 # output "subnet_f_id2" {
 #   value = module.networking.subnet_f_id2
