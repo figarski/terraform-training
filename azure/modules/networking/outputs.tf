@@ -9,3 +9,7 @@ output "subnet_f_id1" {
 output "subnet_f_id2" {
   value = azurerm_subnet.subnet_f2.name
   }
+
+output "subnet_names" {
+  value = [for subnet in azurerm_subnet.subnet_f1_x: subnet.name]
+    }

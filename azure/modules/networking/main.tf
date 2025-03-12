@@ -24,6 +24,35 @@ resource "azurerm_subnet" "subnet_f2" {
   address_prefixes = [var.address_prefixes[1]]
 }
 
+# resource "azurerm_subnet" "f_subnets" {
+#   for_each = tomap({
+#     subnet1       = "10.0.0.0/24"
+#     subnet2       = "10.0.1.0/24"
+#   })
+#   name     = "${random_pet.random_f.id}_subnet-3"
+#   virtual_network_name = azurerm_virtual_network.virt_network.name
+#   address_prefixes = each.value
+#   resource_group_name = "terraform-training-${var.enviroment}-rg"
+# }
+
+#przyklad z locals
+resource "azurerm_subnet" "f_subnets" {
+  for_each = local.subnets
+  address_prefixes = each.value.address_prefixes
+  name = "${random_pet.random_f.id}-${each.key}"
+  resource_group_name = "terraform-training-${var.enviroment}-rg"
+  virtual_network_name = azurerm_virtual_network.virt_network.name
+}
+
+#przyklad z variables
+resource "azurerm_subnet" "subnet_f1_x" {
+  for_each = var.addresses
+  name = "${random_pet.random_f.id}_${each.key}"
+  resource_group_name = "terraform-training-${var.enviroment}-rg"
+  virtual_network_name = azurerm_virtual_network.virt_network.name
+  address_prefixes = [each.value]
+}
+
 #przyklad z count
 resource "azurerm_resource_group" "rg_f" {
   count = var.rg_count
@@ -46,3 +75,4 @@ resource "azurerm_resource_group" "example-frg2" {
   name = "terraform-training-${var.enviroment}-rg-${each.value}"
   location = var.location
 }
+
