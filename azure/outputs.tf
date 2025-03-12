@@ -14,6 +14,14 @@ output "subnet_f_names" {
   value = module.networking.subnet_names
 }
 
+# output "storage_account_key_f" {
+#   value = module.storage.storage_account_key_f
+# }
+
+# output "storage_account_key_fkv" {
+#   value = module.keyvault.storage_account_key_f
+# }
+
 # output "storage_account_id" {
 #   value = azurerm_storage_account.tfstate.name
 #   }

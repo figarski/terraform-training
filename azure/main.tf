@@ -9,12 +9,12 @@ terraform {
     }
   }
 
-  backend "azurerm" {
-    resource_group_name  = "terraform-training-dev-rg"
-    storage_account_name = "tfstatepekaoserval"
-    container_name       = "tfstatecointainer"
-    key                  = "pekao_warsztat_tfstatedev"
-  }
+  # backend "azurerm" {
+  #   resource_group_name  = "terraform-training-dev-rg"
+  #   storage_account_name = "tfstatepekaoserval"
+  #   container_name       = "tfstatecointainer"
+  #   key                  = "pekao_warsztat_tfstatedev"
+  # }
 
 }
 
@@ -37,11 +37,33 @@ variable "enviroment" {
 
 module "networking" {
   source = "./modules/networking"
-  addresses = {
+   addresses = var.addresses
+  # addresses = {
+  #   subnet1 = "10.0.1.0/24"
+  #   subnet2 = "10.0.2.0/24"
+  # }
+}
+
+module "storage" {
+  source = "./modules/storage"
+}
+
+module "keyvault" {
+  source = "./modules/keyvault"
+}
+
+
+variable "addresses" {
+  type = map(string)
+  default = {
     subnet1 = "10.0.1.0/24"
     subnet2 = "10.0.2.0/24"
   }
 }
+
+# variable "address_prefixes" {
+#   type = map(string)
+# }
 
 # resource "random_pet" "random_f" {
 #   length = 1
