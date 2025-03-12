@@ -35,7 +35,7 @@ resource "azurerm_subnet" "subnet_f2" {
 #   resource_group_name = "terraform-training-${var.enviroment}-rg"
 # }
 
-#przyklad z locals
+#przyklad for_each z locals
 resource "azurerm_subnet" "f_subnets" {
   for_each = local.subnets
   address_prefixes = each.value.address_prefixes
@@ -44,7 +44,7 @@ resource "azurerm_subnet" "f_subnets" {
   virtual_network_name = azurerm_virtual_network.virt_network.name
 }
 
-#przyklad z variables
+#przyklad for_each z variables
 resource "azurerm_subnet" "subnet_f1_x" {
   for_each = var.addresses
   name = "${random_pet.random_f.id}_${each.key}"
