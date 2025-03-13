@@ -70,7 +70,7 @@ variable "address_prefixes" {
 }
 
 module "networking" {
-  source = "./modules/networking"
+  source    = "./modules/networking"
   addresses = var.address_prefixes
 }
 
@@ -83,16 +83,16 @@ module "keyvault" {
 # }
 
 resource "azurerm_storage_account" "stacct" {
-  name = "stacctkl"
-  location = "east us"
-  resource_group_name = azurerm_resource_group.rg.name
-  account_tier = "Standard"
+  name                     = "stacctkl"
+  location                 = "east us"
+  resource_group_name      = azurerm_resource_group.rg.name
+  account_tier             = "Standard"
   account_replication_type = "LRS"
 }
 
 resource "azurerm_storage_container" "videos" {
-  name = "videos"
-  storage_account_name = azurerm_storage_account.stacct.name
+  name                  = "videos"
+  storage_account_name  = azurerm_storage_account.stacct.name
   container_access_type = "blob"
 }
 
