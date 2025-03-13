@@ -6,6 +6,10 @@ output "subnet_f_names" {
   value = module.networking.subnet_names
 }
 
+
+# output "primary_key" {
+#   value = module.keyvault.
+# }
 # output "subnet_f_id2" {
 #   value = module.networking.subnet_f_id2
 #   }

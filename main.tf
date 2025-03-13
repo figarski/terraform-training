@@ -61,28 +61,42 @@ variable "rg_count" {
   default = 3
 }
 
-module "networking" {
-  source = "./modules/networking"
-  addresses = {
+variable "address_prefixes" {
+  type = map(string)
+  default = {
     subnet1 = "10.0.1.0/24"
     subnet2 = "10.0.2.0/24"
   }
+}
+
+module "networking" {
+  source = "./modules/networking"
+  addresses = var.address_prefixes
+}
+
+module "keyvault" {
+  source = "./modules/keyvault"
 }
 
 # resource "random_pet" "random_f" {
 #   length = 1
 # }
 
-# resource "azurerm_storage_account" "tfstate" {
-#   name = "tfstatepekao${random_pet.random_f.id}"
-#   location = "east us"
-#   resource_group_name = azurerm_resource_group.rg.name
-#   account_tier = "Standard"
-#   account_replication_type = "LRS"
-# }
+resource "azurerm_storage_account" "stacct" {
+  name = "stacctkl"
+  location = "east us"
+  resource_group_name = azurerm_resource_group.rg.name
+  account_tier = "Standard"
+  account_replication_type = "LRS"
+}
 
-# resource "azurerm_storage_container" "tfstate" {
-#   name = "tfstatecontainer"
-#   storage_account_name = azurerm_storage_account.tfstate.name
-#   container_access_type = "blob"
-# }
+resource "azurerm_storage_container" "videos" {
+  name = "videos"
+  storage_account_name = azurerm_storage_account.stacct.name
+  container_access_type = "blob"
+}
+
+resource "azurerm_storage_table" "logs" {
+  name                 = "logs"
+  storage_account_name = azurerm_storage_account.stacct.name
+}
